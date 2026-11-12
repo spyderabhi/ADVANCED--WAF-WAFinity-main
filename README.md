@@ -1,31 +1,41 @@
-# WAFinity - Infinite Protection, Intelligent Detection
+![WAFinity banner](assets/project-banner.svg)
 
-**WAFinity** I’m excited to share my project, WAFinity — an Advanced Web Application Firewall built to strengthen web security with a hybrid detection approach.
+# WAFinity — Web Application Firewall Prototype
 
-This project combines traditional signature-based detection with machine learning-based analysis to detect malicious payloads more effectively and respond in real time. It includes request preprocessing, threat inspection, proxy-based filtering, and a dashboard for monitoring suspicious activity.
+Experimental Flask application with a signature-based request classifier and an optional machine-learning decision path for obfuscated requests.
 
-The goal is simple: help protect web applications from common attacks such as SQL injection, cross-site scripting, path traversal, and other malicious requests, while keeping the system efficient and practical for real-world deployment.
+## Project components
 
-This project was a great opportunity to work at the intersection of cybersecurity, Python development, and intelligent threat detection. I’m proud of the work and excited to continue improving it with more advanced detection capabilities, better analytics, and broader real-world testing.
+- Flask HTTP routes for a dashboard and request inspection.
+- Signature checker and preprocessing utilities.
+- Machine-learning helper module and serialized model artifact.
+- Static HTML/CSS/JavaScript dashboard.
 
-I’d love to hear feedback from fellow cybersecurity and software engineering professionals.
+## Run (development only)
 
-#CyberSecurity #WebSecurity #WAF #Python #MachineLearning #ThreatDetection #ApplicationSecurity #InfoSec #Flask #CyberDefense
+```bash
+python -m pip install -r requirements.txt
+python app.py
+```
 
+Use a local isolated environment. Some dependencies and serialized model versions may require adjustment.
 
-## Features
+## Security and accuracy notes
 
-- 🚫 Block Known Web Attacks
-- 🤖 AI-powered threat detection
-- 🛡️ Real-time Request Analysis
-- ✨ Modern, Responsive UI
-- 📊 Interactive Security Insights
-- 🚀 Fast response time
+- This is a **prototype**, not an independently benchmarked or production-ready web application firewall.
+- Any detection result should be validated against a controlled evaluation dataset before making performance claims.
+- Only test systems for which you have authorization.
+- Previous commits include generated `.pyc` files and request logs. Current source no longer writes raw request payloads to the demonstration log; historical copies remain in Git history.
+- The `logs/` directory is created at startup when needed.
 
+## Validation status
 
-## Tech Stack
+Source and dependencies have been reviewed, but no full integration/regression test has been completed in this audit.
 
-- Python/Flask
-- JavaScript
-- HTML/CSS
-- Machine Learning
+## Maintainer
+
+Abhinav Saini · GitHub: spyderabhi
+
+## License
+
+No root LICENSE was identified; verify appropriate terms before redistribution.

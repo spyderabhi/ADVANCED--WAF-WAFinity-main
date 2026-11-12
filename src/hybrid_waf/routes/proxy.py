@@ -1,6 +1,9 @@
 from flask import Blueprint, request, jsonify
 from src.hybrid_waf.utils.signature_checker import check_signature
 import logging
+from pathlib import Path
+
+Path('logs').mkdir(parents=True, exist_ok=True)
 
 # Create a dedicated logger for WAF detections
 waf_logger = logging.getLogger('waf_detections')
@@ -21,7 +24,7 @@ proxy_bp = Blueprint('proxy', __name__)
 
 @proxy_bp.route('/check_request', methods=['POST'])
 def check_request():
-    data = request.get_json()
+    data = request.get_json(silent=True) or {}
     
     user_input = data.get("user_request", "")
     uri = data.get("uri", user_input)
@@ -32,14 +35,14 @@ def check_request():
     signature_result = check_signature(user_input)
     
     if signature_result == "valid":
-        waf_logger.info(f"{user_input} - valid")
+        waf_logger.info("request classification: valid")
         return jsonify({
             "status": "valid",
             "message": "All Clear! Your request passed our security checks with flying colors.✨"
         })
 
     if signature_result == "malicious":
-        waf_logger.info(f"{user_input} - malicious(signature)")
+        waf_logger.info("request classification: malicious (signature)")
         return jsonify({
             "status": "malicious",
             "message": "Critical Alert! Malicious pattern detected in your request.<br>Access Denied!🔒"
@@ -55,7 +58,7 @@ def check_request():
         
         final_status = "malicious" if prediction == 1 else "valid"
         
-        waf_logger.info(f"{user_input} - malicious(ML)" if prediction == 1 else f"{user_input} - valid")
+        waf_logger.info("request classification: malicious (ML)" if prediction == 1 else "request classification: valid (ML)")
             
         return jsonify({
             "status": "obfuscated",
